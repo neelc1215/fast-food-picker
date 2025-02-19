@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fast Food Picker</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        /* Bluish background */
+        body {
+            background: linear-gradient(135deg, #003366, #004080, #0059b3);
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Center the content */
+        .container {
+            max-width: 600px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Styling for form labels */
+        label {
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Restaurant recommendation result */
+        .result {
+            margin-top: 20px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        /* Loading text */
+        .loading {
+            display: none;
+            margin-top: 20px;
+            font-size: 18px;
+            color: #ffcc00;
+        }
+    </style>
+    
+    <script>
+        function showLoading() {
+            document.getElementById("loading").style.display = "block";
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="mb-4">🍔 Fast Food Picker 🍕</h1>
+
+        <form method="POST" onsubmit="showLoading()">
+            <div class="mb-3">
+                <label class="form-label">Enter ZIP Code:</label>
+                <input type="text" class="form-control" name="zip_code" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Select Cuisine:</label>
+                <select name="cuisine" class="form-select">
+                    <option value="Any">Any</option>
+                    <option value="Mexican">Mexican</option>
+                    <option value="American">American</option>
+                    <option value="Chinese">Chinese</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Select Price Range:</label>
+                <select name="price" class="form-select">
+                    <option value="Any">Any</option>
+                    <option value="low">$ (Cheap)</option>
+                    <option value="medium">$$ (Moderate)</option>
+                    <option value="high">$$$ (Expensive)</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-warning w-100">Find Restaurant</button>
+        </form>
+
+        <div id="loading" class="loading">🔄 Searching for the best meal...</div>
+
+        {% if restaurant %}
+            <div class="result mt-4">
+                🎉 You should eat at: <b>{{ restaurant }}</b>
+                {% if item %}
+                    <br> 🍔 Recommended Menu Item: <b>{{ item }}</b>
+                {% endif %}
+            </div>
+        {% elif error %}
+            <div class="alert alert-danger mt-4">
+                ❌ {{ error }}
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
